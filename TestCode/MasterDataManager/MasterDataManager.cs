@@ -26,11 +26,11 @@ public class TableBaseData<Key, Value>
     /// <summary>
     /// Data 파싱
     /// </summary>
-    public IEnumerable<Value> LoadTable(string json)
+    public Value[] LoadTable(string json)
     {
         try
         {
-            return JsonConvert.DeserializeObject<IEnumerable<Value>>(json);
+            return JsonConvert.DeserializeObject<Value[]>(json);
         }
         catch (Exception)
         {
@@ -45,7 +45,7 @@ public class TableBaseData<Key, Value>
     /// </summary>
     public void SetDictionary(Dictionary<Key, Value> dic)
     {
-        if (dic == null)
+        if (!dic)
         {
             return;
         }
@@ -54,7 +54,7 @@ public class TableBaseData<Key, Value>
     }
 
     /// <summary>
-    /// 딕셔너리 전체 반환
+    /// 딕셔너리 반환
     /// </summary>
     public Dictionary<Key, Value> GetDic() => _dic;
 
@@ -65,6 +65,11 @@ public class TableBaseData<Key, Value>
     {
         return _dic.TryGetValue(key, out Value value) ? (Value)Convert.ChangeType(value, typeof(Value)) : default;
     }
+
+    /// <summary>
+    /// 리스트 반환
+    /// </summary>
+    public List<Value> GetList() => _list;
 }
 
 /*===========================================================================================

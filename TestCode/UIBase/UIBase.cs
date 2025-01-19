@@ -251,7 +251,7 @@ public class UIBase : MonoBehaviour
                     return false;
             }
 
-            if (_childUI != null)
+            if (_childUI)
             {
                 if (!_dicUI.ContainsKey(child.name))
                 {
@@ -289,7 +289,7 @@ public class UIBase : MonoBehaviour
     {
         var img = GetUI<Image>(hierachyName);
 
-        if (img != null)
+        if (img)
         {
             if (!string.IsNullOrEmpty(spriteName))
             {
@@ -307,7 +307,7 @@ public class UIBase : MonoBehaviour
     {
         var txtmp = GetUI<TMP_Text>(hierachyName);
 
-        if (txtmp != null)
+        if (txtmp)
         {
             if (!string.IsNullOrEmpty(str))
             {
@@ -325,9 +325,9 @@ public class UIBase : MonoBehaviour
     {
         var txtmp = GetUI<TMP_Text>(hierachyName);
 
-        if (txtmp != null)
+        if (txtmp)
         {
-            if (masterLocalData != null)
+            if (masterLocalData)
             {
                 Util.SetMasterLocalizing(txtmp, masterLocalData);
             }
@@ -343,12 +343,12 @@ public class UIBase : MonoBehaviour
     {
         var btn = GetUI<Button>(hierachyName);
 
-        if (btn != null)
+        if (btn)
         {
             btn.onClick.RemoveAllListeners();
 
             btn.onClick.AddListener(() => Single.Sound.PlayEffect(soundName ?? Cons.click));
-            if (unityAction != null)
+            if (unityAction)
             {
                 btn.onClick.AddListener(unityAction);
             }
@@ -364,7 +364,7 @@ public class UIBase : MonoBehaviour
     {
         var input = GetUI<TMP_InputField>(hierachyName);
 
-        if (input != null)
+        if (input)
         {
             if (valueChangedAction != null)
             {
@@ -388,7 +388,7 @@ public class UIBase : MonoBehaviour
     /// </summary>
     public GameObject GetChildGObject(string hierachyName)
     {
-        if (_dicGO.TryGetValue(hierachyName, out GameObject goFind) == false)
+        if (!_dicGO.TryGetValue(hierachyName, out GameObject goFind))
         {
             DEBUG.LOGWARNING($"GetGameObject() : GameObject를 찾지 못했습니다. - {hierachyName}", eColorManager.UI);
             return null;
@@ -407,7 +407,7 @@ public class UIBase : MonoBehaviour
     {
         dropdown = GetUI<TMP_Dropdown>(hierachyName);
 
-        if (dropdown != null)
+        if (dropdown)
         {
             dropdown.onValueChanged.AddListener((idx) => Single.Sound.PlayEffect(Cons.click));
 
@@ -440,7 +440,7 @@ public class UIBase : MonoBehaviour
     /// </summary>
     private void Localizing_TMPDropdownOption(TMP_Dropdown dropdown, List<MasterLocalData> masterLocalData = null)
     {
-        if (dropdown == null ||
+        if (!dropdown ||
             masterLocalData == null ||
             masterLocalData.Count == 0) return;
 
@@ -473,7 +473,7 @@ public class UIBase : MonoBehaviour
     {
         var tog = GetUI<Toggle>(togName);
 
-        if (tog != null)
+        if (tog)
         {
             tog.onValueChanged.AddListener((b) =>
             {
@@ -500,7 +500,7 @@ public class UIBase : MonoBehaviour
     {
         var tog = GetUI<Toggle>(togName);
 
-        if (tog != null)
+        if (tog)
         {
             tog.onValueChanged.AddListener((b) =>
             {
