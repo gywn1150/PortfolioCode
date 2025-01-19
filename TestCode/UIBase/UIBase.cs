@@ -257,11 +257,9 @@ public class UIBase : MonoBehaviour
                 {
                     _dicUI.Add(child.name, _childUI);
                 }
-                return true;
             }
         }
-
-        return false;
+        return true;
     }
     #endregion
 
@@ -274,13 +272,13 @@ public class UIBase : MonoBehaviour
     /// <returns></returns>
     public T GetUI<T>(string hierachyName) where T : MonoBehaviour
     {
-        if (_dicUI.TryGetValue(hierachyName, out MonoBehaviour childUI) == false)
+        if (!_dicUI.TryGetValue(hierachyName, out MonoBehaviour childUI))
         {
             DEBUG.LOGWARNING($"GetUI() : 해당 UI가 존재하지 않습니다. - {hierachyName}", eColorManager.UI);
             return null;
         }
 
-        return (T)childUI;
+        return childUI as T;
     }
 
 
@@ -291,9 +289,12 @@ public class UIBase : MonoBehaviour
     {
         var img = GetUI<Image>(hierachyName);
 
-        if (!string.IsNullOrEmpty(spriteName))
+        if (img != null)
         {
-            img.sprite = Single.Resources.Load<Sprite>(Cons.Path_Image + spriteName);
+            if (!string.IsNullOrEmpty(spriteName))
+            {
+                img.sprite = Single.Resources.Load<Sprite>(Cons.Path_Image + spriteName);
+            }
         }
 
         return img;
@@ -389,7 +390,7 @@ public class UIBase : MonoBehaviour
     {
         if (_dicGO.TryGetValue(hierachyName, out GameObject goFind) == false)
         {
-            DEBUG.LOGWARNING($"GetGameObject() : 게임오브젝트 몾찾음 - {hierachyName}", eColorManager.UI);
+            DEBUG.LOGWARNING($"GetGameObject() : GameObject를 찾지 못했습니다. - {hierachyName}", eColorManager.UI);
             return null;
         }
 
